@@ -1,0 +1,46 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python src/preprocess.py
+    deps:
+    - path: data/raw/titanic.csv
+      hash: md5
+      md5: 2309cc5f04782ed9bb6016d9f4e381cf
+      size: 61194
+    - path: src/preprocess.py
+      hash: md5
+      md5: 4fe2bb01899bef7d6612800cfdb5b1b4
+      size: 1064
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: 993639120d80572f1f2ef73f467155fc.dir
+      size: 15253
+      nfiles: 4
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/processed/X_train.csv
+      hash: md5
+      md5: 1102e5b8c95b60cb88a3280b5c9d0806
+      size: 10714
+    - path: src/train.py
+      hash: md5
+      md5: 602f71b089fe9dd78487fb42948a0918
+      size: 846
+    outs:
+    - path: models/model.pkl
+      hash: md5
+      md5: 5218a50546ac2feef4112574f4c05e16
+      size: 5405
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: models/model.pkl
+      hash: md5
+      md5: 5218a50546ac2feef4112574f4c05e16
+      size: 5405
+    - path: src/evaluate.py
+      hash: md5
+      md5: 67bb62aebfb0c5424590f25092411530
+      size: 518

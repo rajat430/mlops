@@ -34,6 +34,8 @@ MANIFEST
 
 # Installer logs
 pip-log.txt
+mlruns/
+mlflow.db
 pip-delete-this-directory.txt
 
 # Unit test / coverage reports
