@@ -13,7 +13,7 @@ test_size = params["train"]["test_size"]
 random_state = params["train"]["random_state"]
 
 # Load dataset
-df = pd.read_csv("data/raw/titanic.csv")
+df = pd.read_csv("data/raw/Titanic-Dataset.csv")
 
 # Select features
 df = df[["Pclass", "Sex", "Age", "Fare", "Survived"]]

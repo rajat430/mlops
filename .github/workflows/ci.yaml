@@ -1,0 +1,42 @@
+name: CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.12'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Auth and Download Data from Azure Blob Storage
+      env:
+        AZURE_STORAGE_ACCOUNT: ${{ secrets.AZURE_STORAGE_ACCOUNT }}
+        AZURE_STORAGE_KEY: ${{ secrets.AZURE_STORAGE_KEY }}
+      run: |
+        dvc pull
+    - name: Setup MLFLOW Local
+      run: |
+        mlflow server --backend-store-uri sqlite:///mlflow.db
+        sleep 10
+    - name: Build Model
+      run: |
+        dvc repro
+    - name: Publish_Metrics_From_MLFLOW
+      run: |
+        python3 src/publish_metrics.py
+    - name: Publish_Report_To_Github
+      uses: actions/upload-artifact@v2
+      with:
+        name: model-metrics-report
+        path: mlflow_report.csv
+        
