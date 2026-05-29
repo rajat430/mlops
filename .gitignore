@@ -146,6 +146,8 @@ rabbitmq-data/
 # ActiveMQ
 activemq-data/
 
+data/*.csv
+
 # SageMath parsed files
 *.sage.py
 
@@ -218,3 +220,4 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+/data
