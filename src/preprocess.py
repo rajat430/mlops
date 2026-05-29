@@ -5,7 +5,7 @@ import os
 
 os.makedirs("data/processed", exist_ok=True)
 
-# Load params
+# Load params 
 with open("params.yaml") as f:
     params = yaml.safe_load(f)
 
