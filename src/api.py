@@ -1,32 +1,14 @@
+import mlflow
 import pandas as pd
-import joblib
 
-# -----------------------------------
-# Load trained model
-# -----------------------------------
-model = joblib.load("models/model.pkl")
+mlflow.set_tracking_uri("sqlite:///mlflow.db")
 
-# -----------------------------------
-# Create passenger input
-# -----------------------------------
-input_data = pd.DataFrame({
-    "Pclass": [3],
-    "Sex": [1],          # male=1, female=0
-    "Age": [22],
-    "Fare": [7.25],
-  })
-# Match training datatype
-input_data = input_data.astype("float64")
+# Get experiment
+experiment = mlflow.get_experiment_by_name("Titanic_MLOps")
 
-# -----------------------------------
-# Predict
-# -----------------------------------
-prediction = model.predict(input_data)
+# Search runs
+runs = mlflow.search_runs(
+    experiment_ids=[experiment.experiment_id]
+)
 
-# -----------------------------------
-# Output
-# -----------------------------------
-if prediction[0] == 1:
-    print("Passenger Survived")
-else:
-    print("Passenger Did Not Survive")
+print(experiment)
