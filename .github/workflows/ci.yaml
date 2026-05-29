@@ -35,7 +35,7 @@ jobs:
       run: |
         python3 src/publish_metrics.py
     - name: Publish_Report_To_Github
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: model-metrics-report
         path: mlflow_report.csv
