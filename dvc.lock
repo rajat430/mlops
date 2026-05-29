@@ -1,22 +1,5 @@
 schema: '2.0'
 stages:
-  preprocess:
-    cmd: python src/preprocess.py
-    deps:
-    - path: data/raw/titanic.csv
-      hash: md5
-      md5: 2309cc5f04782ed9bb6016d9f4e381cf
-      size: 61194
-    - path: src/preprocess.py
-      hash: md5
-      md5: 4fe2bb01899bef7d6612800cfdb5b1b4
-      size: 1064
-    outs:
-    - path: data/processed
-      hash: md5
-      md5: 993639120d80572f1f2ef73f467155fc.dir
-      size: 15253
-      nfiles: 4
   train:
     cmd: python src/train.py
     deps:
