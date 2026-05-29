@@ -34,7 +34,7 @@ jobs:
         dvc pull
     - name: Setup MLFLOW Local
       run: |
-        mlflow server --backend-store-uri sqlite:///mlflow.db
+        mlflow server --backend-store-uri sqlite:///mlflow.db 2>&1 < /dev/null &
         sleep 10
     - name: Build Model
       run: |
