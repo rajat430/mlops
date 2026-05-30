@@ -88,7 +88,7 @@ jobs:
   deploy:
     needs: build
     if: ${{github.event.pull_request.merged == true && github.base_ref == 'main'}}
-    runs-on: ubuntu-latst
+    runs-on: ubuntu-latest
     steps:
       - name: Deploy Workflow
         uses: ./.github/workflows/CD.yaml
