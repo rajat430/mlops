@@ -1,9 +1,10 @@
 name: CI
 on:
   push:
-    branches: [ main ]
+    branches: [ feature/** ]
   pull_request:
     branches: [ main ]
+    types: [ opened, synchronize, reopened ]
 
 jobs:
   build:
@@ -78,16 +79,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/mlops-app:latest
+        tags: ${{ secrets.DOCKER_USERNAME }}/mlops-app:${{github.sha}}
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-    - name: Azure Login
-      uses: azure/login@v3
-      with:
-        creds: ${{ secrets.CREDS }}
-    - name: Deploy to Azure Web App Container
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
-        images: ${{ secrets.DOCKER_USERNAME }}/mlops-app:latest
