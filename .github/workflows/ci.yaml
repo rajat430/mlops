@@ -91,7 +91,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy Workflow
-        uses: ./.github/workflows/CD.yaml
+        uses: rajat430/mlops//.github/workflows/CD.yaml@main
         with:
           image_sha_id: ${{github.sha}}
 
