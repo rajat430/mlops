@@ -1,8 +1,11 @@
 name: CD
+#child workflow
 on:
-  pull_request:
-    branches: [ main ]
-    types: [ closed ]
+  workflow_call:
+    inputs:
+      image_sha_id:
+        required: true
+        type: string
 jobs:
   deploy:
     if: github.event.pull_request.merged == true
@@ -33,4 +36,4 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
-        images: ${{ secrets.DOCKER_USERNAME }}/mlops-app:${{github.sha}}
+        images: ${{ secrets.DOCKER_USERNAME }}/mlops-app:${{inputs.image_sha_id}}
