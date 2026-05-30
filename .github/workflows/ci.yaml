@@ -5,6 +5,10 @@ on:
   pull_request:
     branches: [ main ]
     types: [ opened, synchronize, reopened,closed ]
+permissions:
+  contents: write
+  packages: write
+  pull-requests: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -88,11 +92,9 @@ jobs:
   deploy:
     needs: build
     if: ${{github.event.pull_request.merged == true && github.base_ref == 'main'}}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy Workflow
-        uses: rajat430/mlops//.github/workflows/CD.yaml@main
-        with:
-          image_sha_id: ${{github.sha}}
+    uses: rajat430/mlops/.github/workflows/CD.yaml@main
+    with:
+      image_sha_id: ${{github.sha}}
+      
 
 
