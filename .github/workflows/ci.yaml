@@ -5,7 +5,6 @@ on:
   pull_request:
     branches: [ main ]
     types: [ opened, synchronize, reopened,closed ]
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -85,3 +84,15 @@ jobs:
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+  deploy:
+    needs: build
+    if: ${{github.event_name == 'pull_request' && github.event.action == 'closed' && github.base_ref == 'main'}}
+    runs-on: ubuntu-latst
+    steps:
+      - name: Deploy Workflow
+        uses: ./.github/workflows/CD.yaml
+        with:
+          image_sha_id: ${{github.sha}}
+
+
